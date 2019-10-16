@@ -4,9 +4,14 @@ var Schema = mongoose.Schema;
 
 var NotesSchema = new Schema({
 
-    type: String,
+    name: {
+        type: String,
+    },
 
-    body: String
+    body: {
+        type: String,
+        required: true
+    }
 });
 
 var Notes = mongoose.model("Notes", NotesSchema);
