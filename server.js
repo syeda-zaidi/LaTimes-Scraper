@@ -1,6 +1,5 @@
 var express = require("express");
 var mongoose = require("mongoose");
-var exhbars = require("express-handlebars");
 
 var axios = require("axios");
 var cheerio = require("cheerio");
@@ -16,10 +15,16 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+var exhbars = require("express-handlebars");
+app.engine("handlebars", exhbars({ defaultLayout: "main"}) );
+app.set("view engine", "handlebars");
+
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI,  { useNewUrlParser: true });
+
+
 
 // Start the server
 app.listen(PORT, function() {
