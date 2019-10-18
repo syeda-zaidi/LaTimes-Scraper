@@ -13,7 +13,7 @@ var app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 var exhbars = require("express-handlebars");
 app.engine("handlebars", exhbars({ defaultLayout: "main" }));
@@ -29,6 +29,7 @@ app.get("/", function (req, res) {
   res.render("index")
 });
 
+// scrapes new articles and saves in db
 app.get("/scrape", function (req, res) {
 
   axios.get("https://www.latimes.com").then(function (response) {
@@ -52,46 +53,59 @@ app.get("/scrape", function (req, res) {
   });
 });
 
-app.get("/articles", function (req, res) {
+//return json for all saved articles 
+app.get("/articles-json", function (req, res) {
 
   db.Articles.find({})
-  .then(function (dbArticles) {
-    res.json(dbArticles);
-  }).catch(function (err) {
-    res.json(err);
-  });
+    .then(function (dbArticles) {
+      res.json(dbArticles);
+    }).catch(function (err) {
+      res.json(err);
+    });
 });
 
-app.get("/articles/:id", function(req, res) {
-  
+app.get("/articles/:id", function (req, res) {
+
   db.Articles.findOne({ _id: req.params.id })
 
-  .populate("Notes")
+    .populate("Notes")
 
-  .then(function (dbArticles) {
-    res.json(dbArticles)
-  }).catch(function(err) {
-    res.json(err);
-  });
+    .then(function (dbArticles) {
+      res.json(dbArticles)
+    }).catch(function (err) {
+      res.json(err);
+    });
 });
 
 // creating and saving note associate to article
-app.post("/articles/:id", function(req, res) {
+app.post("/articles/:id", function (req, res) {
 
   db.Notes.create(req.body)
 
-  .then(function(dbNote) {
-    return db.Articles.findOneAndUpdate({ _id: req.params.id}, {Notes: dbNote._id}, {new: true});
-  })
-  .then(function(dbArticles) {
-    res.json(dbArticles); //why are we doing this 
-  })
-  .catch(function(err) {
-    //sends err to the client 
-    res.json(err);
+    .then(function (dbNote) {
+      return db.Articles.findOneAndUpdate({ _id: req.params.id }, { Notes: dbNote._id }, { new: true });
+    })
+    .then(function (dbArticles) {
+      res.json(dbArticles); //why are we doing this 
+    })
+    .catch(function (err) {
+      //sends err to the client 
+      res.json(err);
 
-  })
-})
+    })
+});
+
+// removes all articles 
+app.get("/clear", function (req, res) {
+  db.Articles.remove({}, function (err, res) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("cleared all articles");
+    }
+  });
+  res.redirect("/articles-json");
+});
 
 // Start the server
 app.listen(PORT, function () {

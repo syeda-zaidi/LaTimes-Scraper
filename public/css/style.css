@@ -1,4 +1,47 @@
-.btn-danger {
-    padding: 20px;
-    margin-right: 40px;
+.navbar-brand {
+    font-size: 30px;
+}
+.nav {
+    height: 150px;
+    width: 100%;
+}
+
+.nav-item {
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.jumbotron {
+    height: 500px;
+    background-image: url("https://content.indiainfoline.com/_media/iifl/img/misc/2015-03/19/full/digital-tablet-showing-news-1426748763-331300.jpg");
+    background-size: cover;
+    box-shadow: 2px 2px 2px;
+    opacity: 0.5; 
+    position: relative;
+   
+}
+
+.caption {
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    text-align: center;
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    opacity: 1.0;
+}
+
+.caption h1 {
+    font-size: 80px;
+}
+
+.caption h5 {
+    font-size: 30px;
+}
+
+.footer {
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
