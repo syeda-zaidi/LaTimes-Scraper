@@ -62,6 +62,37 @@ app.get("/articles", function (req, res) {
   });
 });
 
+app.get("/articles/:id", function(req, res) {
+  
+  db.Articles.findOne({ _id: req.params.id })
+
+  .populate("Notes")
+
+  .then(function (dbArticles) {
+    res.json(dbArticles)
+  }).catch(function(err) {
+    res.json(err);
+  });
+});
+
+// creating and saving note associate to article
+app.post("/articles/:id", function(req, res) {
+
+  db.Notes.create(req.body)
+
+  .then(function(dbNote) {
+    return db.Articles.findOneAndUpdate({ _id: req.params.id}, {Notes: dbNote._id}, {new: true});
+  })
+  .then(function(dbArticles) {
+    res.json(dbArticles); //why are we doing this 
+  })
+  .catch(function(err) {
+    //sends err to the client 
+    res.json(err);
+
+  })
+})
+
 // Start the server
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
