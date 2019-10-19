@@ -36,20 +36,33 @@ app.get("/scrape", function (req, res) {
 
     const $ = cheerio.load(response.data);
 
-    $(".PromoSmall-title").each(function (i, element) {
+    $(".PromoSmall-content").each(function (i, element) {
       var result = {};
 
-      result.title = $(this).children("a").text();
-      result.link = $(this).children("a").attr("href");
+      result.title = $(this).children(".PromoSmall-titleContainer").children(".PromoSmall-title").children("a").text();
+      result.link = $(this).children(".PromoSmall-titleContainer").children(".PromoSmall-title").children("a").attr("href");
+      result.description = $(this).children(".PromoSmall-description").text();
+        console.log(result)
 
-      db.Articles.create(result).then(function (dbArticles) {
-        console.log(dbArticles);
-      }).catch(function (err) {
-        console.log(err);
-      });
+        if (result.title && result.link && result.description){
+          db.Articles.create(result).then(function (dbArticles) {
+        
+          }).catch(function (err) {
+            console.log(err);
+          });
+        }
     });
 
     res.send("scrape complete");
+  });
+});
+
+app.get("/articles", function (req, res) {
+  
+  db.Articles.find({}).then(function (dbArticles) { 
+    console.log(dbArticles);
+  
+    res.render("index", {data: dbArticles} )
   });
 });
 

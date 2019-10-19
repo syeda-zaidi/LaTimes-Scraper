@@ -13,7 +13,7 @@
 
 .jumbotron {
     height: 500px;
-    background-image: url("https://content.indiainfoline.com/_media/iifl/img/misc/2015-03/19/full/digital-tablet-showing-news-1426748763-331300.jpg");
+    background-image: url("/assets/images/digital-tablet-showing-news-1426748763-331300.jpg");
     background-size: cover;
     box-shadow: 2px 2px 2px;
     opacity: 0.5; 
