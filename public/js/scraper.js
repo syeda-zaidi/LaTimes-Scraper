@@ -26,6 +26,24 @@ $(document).ready(function () {
         })
     });
 
-    
+    $(".saveArticle-btn").on("click", function (evt) {
+        evt.preventDefault();
+         var dataId = $(this).data("id");
+
+         $.ajax({
+            method: "PUT",
+            url: `/saved/${dataId}`, 
+            data: {
+                saved: saved
+            }
+        }).then(function (data) {
+            res.redirect("/");
+        }).catch(err => {
+            console.log(err);
+            res.sendStatus(505);
+        })
+    });
+
+
 
 })
