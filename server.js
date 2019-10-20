@@ -24,11 +24,6 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
-
-app.get("/", function (req, res) {
-  res.render("index")
-});
-
 // scrapes new articles and saves in db
 app.get("/scrape", function (req, res) {
 
@@ -57,7 +52,7 @@ app.get("/scrape", function (req, res) {
   });
 });
 
-app.get("/articles", function (req, res) {
+app.get("/", function (req, res) {
   
   db.Articles.find({}).then(function (dbArticles) { 
     console.log(dbArticles);
@@ -76,6 +71,10 @@ app.get("/articles-json", function (req, res) {
       res.json(err);
     });
 });
+
+app.put("/saved", function (req, res) {
+    db.Articles.findOneAndUpdate ({ })
+})
 
 app.get("/articles/:id", function (req, res) {
 
