@@ -46,3 +46,10 @@
     width: 100%;
 }
 
+#commentbtn {
+float: right;
+};
+
+#Article-Card {
+    margin-bottom: 20px;
+}

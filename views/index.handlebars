@@ -1,13 +1,17 @@
-    <div class="article-row">
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 ">
         {{#each data}}
-        <div class="card">
+        <div id="Article-Card" class="card">
             <div class="card-body">
                 <h5 class="card-title"> {{title}} </h5>
                 <p class="card-text">{{description}}</p>
                 <a href="{{link}}" target="_blank" class="btn btn-primary">Read Article </a>
                 <button class="btn btn-success saveArticle-btn" data-id={{this._id}}> Save Article</A></button>
+                <a href="/addComments/{{this._id}}" id="commentbtn"><img src="/assets/images/comments-img.png" width="40px" height="40px"></a>
             </div>
         </div>
         {{/each}}
-    </div>
 
+    </div>
+</div>
