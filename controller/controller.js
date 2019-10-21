@@ -17,7 +17,7 @@ module.exports = app => {
                 result.title = $(this).children(".PromoSmall-titleContainer").children(".PromoSmall-title").children("a").text();
                 result.link = $(this).children(".PromoSmall-titleContainer").children(".PromoSmall-title").children("a").attr("href");
                 result.description = $(this).children(".PromoSmall-description").text();
-                console.log(result)
+                // console.log(result)
 
                 if (result.title && result.link && result.description) {
                     db.Articles.create(result).then(function (dbArticles) {
@@ -35,7 +35,7 @@ module.exports = app => {
     app.get("/", function (req, res) {
 
         db.Articles.find({}).then(function (dbArticles) {
-            console.log(dbArticles);
+            // console.log(dbArticles);
 
             res.render("index", { data: dbArticles })
         }).catch(function (err) {
@@ -67,6 +67,20 @@ module.exports = app => {
             });
     });
 
+    // shows one article with comments form
+    app.get("/addComments/:id", function (req, res) {
+        db.Articles.findOne({ _id: req.params.id })
+            .populate("Notes")
+            .then(function (Article) {
+                console.log(Article);
+                res.render("Articles", { article: Article })
+                // res.json(Article)
+            })
+            .catch(err => {
+                console.log(err);
+                res.sendStatus(500);
+            })
+    });
 
     // //updates the article for saving it
     // app.put("/saved/:id", function (req, res) {
@@ -93,15 +107,24 @@ module.exports = app => {
 
 
     // creating and saving note associate to article
-    app.post("/articles/:id", function (req, res) {
+    app.post("/addComments/:id", function (req, res) {
 
-        db.Notes.create(req.body)
+        var name = req.body.name;
+        var body = req.body.body;
+        var articleId = req.params.id;
 
-            .then(function (dbNote) {
+        var noteObj = {
+            name: name,
+            body: body
+        };
+
+        db.Notes.create(noteObj) 
+        .then(function (dbNote) {
                 return db.Articles.findOneAndUpdate({ _id: req.params.id }, { Notes: dbNote._id }, { new: true });
             })
             .then(function (dbArticles) {
-                res.json(dbArticles);
+                // res.json(dbArticles);
+                res.redirect("/addComments/" + articleId)
             })
             .catch(function (err) {
                 //sends err to the client 

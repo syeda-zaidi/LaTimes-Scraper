@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"> {{article.title}} </h5>
+                    <p class="card-text">{{article.description}}</p>
+                    <a href="{{article.link}}" target="_blank" class="btn btn-primary">Read Article </a>
+                    <button class="btn btn-success" data-id={{this._id}}> Delete From Saved </button>
+                    <button class="btn btn-info" data-{{this._id}}>Articles Notes </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div  class="col-md-8 addCommentBox">
+
+            <form action="/addComments/{{article._id}}" method="POST" class="card-panel">
+                <h5>Make comment about this Article</h5>
+                <div class="form-group">
+                    <label for="note-name"> Name </label>
+                    <input type="text" class="form-control" id="note-name" name="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="note-body">Comment</label>
+                    <input type="text" class="form-control" id="note-body" name="body" placeholder="Comment">
+                </div>
+
+                <button type="submit" value="submit" id="note-submit" class="btn btn-primary"> Add Notes </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="showingComments" class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <h5>Comments:</h5>
+                {{#if article.Notes}}
+                {{#each article.Notes}}
+                <div class="card">
+                    <p id="nameComment">{{name}}</p>
+                    <p>{{body}}<p>
+                </div>
+                {{/each}}
+                {{else}}
+                <p>No Comments Yet.</p>
+                {{/if}}
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+{{!-- 
+
+<div class="row">
+    <div class="col s2"></div>
+    <form action="/comment/{{article._id}}" method="POST" class="card-panel col s8">
+        <h5>Comment on this Article</h5>
+        <div class="row">
+            <div class="input-field">
+                <i class="material-icons prefix">perm_identity</i>
+                <input id="icon_prefix" type="text" placeholder="Name" name="name" class="validate active">
+            </div>
+
+            <div class="input-field">
+                <i class="material-icons prefix">comment</i>
+                <input id="icon_telephone" type="text" placeholder="Comment" name="comment" class="validate active">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <center><input class="btn add-comment-button topnav" type="submit" value="Submit"></center>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col s2"></div>
+    <div class="col s8">
+        <h5>Comments:</h5>
+        {{#if article.comment}}
+        {{#each article.comment}}
+        <div class="card">
+            <p id="nameComment">{{name}}</p>
+            <p>{{body}}<p>
+        </div>
+        {{/each}}
+        {{else}}
+        <p>No Comments Yet.</p>
+        {{/if}}
+
+    </div>
+</div> --}}
