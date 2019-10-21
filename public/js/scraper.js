@@ -44,6 +44,14 @@ $(document).ready(function () {
         })
     });
 
+    $(".delete-note").on("click", function (event) {
+        
+        var noteId = $(this).data("note-id");
+        $.ajax(`/deleteComment/${noteId}`, {
+            type: "DELETE"
+        }).then(data => window.location.href = window.location.href)
+            .catch(err => console.log(err));
+    });
 
 
 })

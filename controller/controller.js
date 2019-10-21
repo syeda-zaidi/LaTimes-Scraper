@@ -118,9 +118,9 @@ module.exports = app => {
             body: body
         };
 
-        db.Notes.create(noteObj) 
-        .then(function (dbNote) {
-                return db.Articles.findOneAndUpdate({ _id: req.params.id }, { Notes: dbNote._id }, { new: true });
+        db.Notes.create(noteObj)
+            .then(function (dbNote) {
+                return db.Articles.findOneAndUpdate({ _id: req.params.id }, { $push: { Notes: dbNote._id } }, { new: true });
             })
             .then(function (dbArticles) {
                 // res.json(dbArticles);
@@ -133,6 +133,19 @@ module.exports = app => {
             })
     });
 
+    app.delete("/deleteComment/:id", function (req, res) {
+        db.Notes.deleteOne({ _id: req.params.id })
+        .then(function(note) {
+            res.sendStatus(200);
+            console.log("comment deleted");
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+    });
+
+    
     // removes all articles 
     app.get("/clear", function (req, res) {
         db.Articles.remove({}, function (err, res) {
