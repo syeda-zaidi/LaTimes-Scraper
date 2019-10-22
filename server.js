@@ -15,6 +15,7 @@ app.use(express.json());
 
 app.use(express.static(__dirname + "/public"));
 
+
 var exhbars = require("express-handlebars");
 app.engine("handlebars", exhbars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
