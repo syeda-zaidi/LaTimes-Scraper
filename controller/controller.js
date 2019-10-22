@@ -133,6 +133,7 @@ module.exports = app => {
             })
     });
 
+    //deleting notes
     app.delete("/deleteComment/:id", function (req, res) {
         db.Notes.deleteOne({ _id: req.params.id })
         .then(function(note) {
@@ -145,7 +146,7 @@ module.exports = app => {
         });
     });
 
-    
+
     // removes all articles 
     app.get("/clear", function (req, res) {
         db.Articles.remove({}, function (err, res) {
