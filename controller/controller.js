@@ -82,23 +82,27 @@ module.exports = app => {
             })
     });
 
-    // //updates the article for saving it
-    // app.put("/saved/:id", function (req, res) {
-    //     ab.Articles.findOneAndUpdate({ _id: req.params.id }, { saved: true }, { new: true })
-    //         .then(function (savedArticle) {
-    //             res.sendStatus(200);
-    //             console.log("article saved : " + savedArticle);
+    //updates the article for saving it
+    app.put("/saved/:id", function (req, res) {
+        console.log("req string", req.body);
+        db.Articles.findOneAndUpdate({ _id: req.params.id }, { saved: req.body.saved }, { new: true })
+            .then(function (savedArticle) {
 
-    //         }).catch(err => {
-    //             console.log(err);
-    //             res.sendStatus(500);
-    //         });
-    // });
+                console.log("article saved : " + savedArticle);
+                res.sendStatus(200);
+
+            }).catch(err => {
+                console.log(err);
+                res.sendStatus(500);
+            });
+    });
+
+
 
     app.get("/saved", function (req, res) {
         db.Articles.find({ saved: true })
             .then(function (dbArticles) {
-                res.render("index", { data: dbArticles });
+                res.render("savedArticles", { data: dbArticles });
             })
             .catch((err) => {
                 console.log(err);
@@ -136,14 +140,14 @@ module.exports = app => {
     //deleting notes
     app.delete("/deleteComment/:id", function (req, res) {
         db.Notes.deleteOne({ _id: req.params.id })
-        .then(function(note) {
-            res.sendStatus(200);
-            console.log("comment deleted");
-        })
-        .catch((err) => {
-            console.log(err);
-            res.sendStatus(500);
-        });
+            .then(function (note) {
+                res.sendStatus(200);
+                console.log("comment deleted");
+            })
+            .catch((err) => {
+                console.log(err);
+                res.sendStatus(500);
+            });
     });
 
 

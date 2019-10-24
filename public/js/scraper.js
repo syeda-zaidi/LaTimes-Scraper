@@ -29,12 +29,13 @@ $(document).ready(function () {
     $(".saveArticle-btn").on("click", function (evt) {
         evt.preventDefault();
          var dataId = $(this).data("id");
+         console.log(dataId);
 
          $.ajax({
             method: "PUT",
             url: `/saved/${dataId}`, 
             data: {
-                saved: saved
+                saved: true
             }
         }).then(function (data) {
             res.redirect("/");
@@ -43,6 +44,26 @@ $(document).ready(function () {
             res.sendStatus(505);
         })
     });
+
+    $(".deleteFromsaved-btn").on("click", function (evt) {
+        evt.preventDefault();
+        console.log("checking delete btn ")
+         var dataId = $(this).data("id");
+        console.log(dataId)
+         $.ajax({
+            method: "PUT",
+            url: `/saved/${dataId}`, 
+            data: {
+                saved: false
+            }
+        }).then(function (data) {
+            window.location.reload();
+        }).catch(err => {
+            console.log(err);
+            res.sendStatus(505);
+        })
+    });
+    
 
     $(".delete-note").on("click", function (event) {
         
