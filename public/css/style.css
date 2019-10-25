@@ -39,10 +39,14 @@
     font-size: 30px;
 }
 
+#Article-Card {
+    margin-bottom: 20px;
+}
+
 .footer {
     color: white;
-    /* position: fixed; */
-    /* bottom: 0; */
+    position: relative;
+    bottom: 0;
     width: 100%;
 }
 
@@ -51,13 +55,15 @@
 }
 
 .addCommentBox {
-    border: 2px solid gray;
+    padding: 20px;
+    /* margin-left: 1px; */
 }
 
-#showingComments {
-    margin-top: 30px;
-
+.comment-cards {
+    padding: 5px;
+    margin-bottom: 10px;
 }
+
 #commentbtn {
-float: right;
+    float: right;
 };

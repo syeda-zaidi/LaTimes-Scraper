@@ -3,35 +3,16 @@
         {{#each data}}
         <div id="Article-Card" class="card">
             <div class="card-body">
-                <h5 class="card-title"> {{title}} </h5>
+                <h5 class="card-title alert alert-dark"> {{title}} </h5>
                 <hr>
                 <p class="card-text">{{description}}</p>
                 <a href="{{link}}" target="_blank" class="btn btn-primary">Read Article </a>
-                <button class="btn btn-success deleteFromsaved-btn" data-id={{this._id}} data-toggle="modal" data-target="#deletefromSavedModal" > Delete From Saved </button>
+                <button class="btn btn-danger deleteFromsaved-btn" data-id={{this._id}} > Delete From Saved </button>
                 <a href="/addComments/{{this._id}}" id="commentbtn"><img src="/assets/images/comments-img.png"
                         width="40px" height="40px"></a>
             </div>
         </div>
 
-        <div class="modal fade" id="deletefromSavedModal" tabindex="-1" role="dialog" aria-labelledby="UnsavedModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="UnsavedModalLabel"> </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <h5> Article Deleted From Saved </h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         {{/each}}
     </div>
 </div>
