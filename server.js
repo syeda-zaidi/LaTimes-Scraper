@@ -1,3 +1,4 @@
+require("dotenv").config();
 var express = require("express");
 var mongoose = require("mongoose");
 
@@ -26,7 +27,9 @@ routes(app);
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(res => {
+  console.log("connected to mongo")
+});
 
 // Start the server
 app.listen(PORT, function () {
